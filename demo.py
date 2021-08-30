@@ -359,7 +359,7 @@ if __name__ == '__main__':
     parser.add_argument('--vid_file', type=str,
                         help='input video path or youtube link')
 
-    parser.add_argument('--output_folder', type=str,
+    parser.add_argument('--output_folder', type=str, default='output/',
                         help='output folder to write results')
 
     parser.add_argument('--tracking_method', type=str, default='bbox', choices=['bbox', 'pose'],
