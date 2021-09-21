@@ -7,9 +7,14 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--input_folder', type=str, default='output/sample_video/vibe_output.pkl')
-parser.add_argument('--output_folder', type=str, default='test_output')
+parser.add_argument('--output_folder', type=str, default='processed_output')
 parser.add_argument('--verbose', action='store_true')
 args = parser.parse_args()
+
+"""
+Example usage with VIBE module:
+python test/sim/smpl_matching_humanoid.py --input_traj ../VIBE/processed_output/mujoco_shaped_smpl_pose.npy -v
+"""
 
 #Current mapping. Should be dynamically passed later on
 mapping_smpl2mujoco = {
