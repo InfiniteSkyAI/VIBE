@@ -9,6 +9,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--input_folder', type=str, default='output/sample_video/vibe_output.pkl')
 parser.add_argument('--output_folder', type=str, default='processed_output')
 parser.add_argument('--verbose', action='store_true')
+parser.add_argument('--output_joint_format', type=str, default='quat')
 args = parser.parse_args()
 
 """
@@ -46,7 +47,15 @@ Skipped things
 """
 
 data = joblib.load(args.input_folder)[1]['pose']
-mujoco_shaped_pose = np.zeros((data.shape[0], 16, 4))
+
+#Set shape to be in euler for the sake of Mujoco
+if args.output_joint_format == 'euler':
+    data_shape = (data.shape[0], 16*3, 1)
+#if args.output_joint_format == 'quat':
+else:
+    data_shape = (data.shape[0], 16, 4)
+
+mujoco_shaped_pose = np.zeros(data_shape)
 
 frame_num = 0
 for d in range(data.shape[0]):
@@ -56,7 +65,7 @@ for d in range(data.shape[0]):
 
     #params = dict(zip((k for k in data), (data[k] for k in data)))
     smpl_pose = data[frame_num].reshape(24,3)[1:22]
-    mujoco_pose = np.zeros((16, 4))
+    mujoco_pose = np.zeros(data_shape[1:3])
 
     for k, v in mapping_smpl2mujoco.items():
 
@@ -82,7 +91,13 @@ for d in range(data.shape[0]):
             top_spine_rotation = R.from_rotvec(new_vec)
             rotation = top_spine_rotation * rotation
 
-        mujoco_pose[k] = np.roll(rotation.as_quat(), 1)
+        if args.output_joint_format == 'euler':
+            start_ind = k*3
+            euler_data = rotation.as_euler
+        #if args.output_joint_format == 'quat':
+        else:
+            mujoco_pose[k] = np.roll(rotation.as_quat(), 1)
+
 
     if args.verbose:
         print(mujoco_pose)
