@@ -65,7 +65,10 @@ for d in range(data.shape[0]):
 
     #params = dict(zip((k for k in data), (data[k] for k in data)))
     smpl_pose = data[frame_num].reshape(24,3)[1:22]
-    mujoco_pose = np.zeros(data_shape[1:3])
+    mujoco_pose = np.zeros(data_shape[1:])
+    
+    if args.output_joint_format == 'euler':
+        euler_joints = []
 
     for k, v in mapping_smpl2mujoco.items():
 
@@ -93,14 +96,16 @@ for d in range(data.shape[0]):
 
         if args.output_joint_format == 'euler':
             start_ind = k*3
-            euler_data = rotation.as_euler
+            euler_data = rotation.as_euler('xyz')
+            euler_joints.extend(euler_data.flatten())
         #if args.output_joint_format == 'quat':
         else:
             mujoco_pose[k] = np.roll(rotation.as_quat(), 1)
+    
+    mujoco_pose = np.array([euler_joints]).reshape(mujoco_pose.shape)
 
-
-    if args.verbose:
-        print(mujoco_pose)
+    #if args.verbose:
+        #print(mujoco_pose)
     mujoco_shaped_pose[frame_num] = mujoco_pose
     frame_num += 1
 
