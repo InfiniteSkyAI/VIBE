@@ -9,7 +9,7 @@ echo "Vid name: ${arrIN0[-1]}"
 arrIN=(${arrIN0[-1]//./ })
 vid_name=${arrIN[0]}   
 
-python demo.py --vid_file $1 --output_folder $SCRIPT_DIR/output/
+python demo.py --vid_file $1 --output_folder $2/output/
 echo "Processing $vid_name, extension '${arrIN[1]}'."
 
 mkdir $SCRIPT_DIR/processed_output/$vid_name/
