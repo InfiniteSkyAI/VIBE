@@ -102,7 +102,8 @@ for d in range(data.shape[0]):
         else:
             mujoco_pose[k] = np.roll(rotation.as_quat(), 1)
     
-    mujoco_pose = np.array([euler_joints]).reshape(mujoco_pose.shape)
+    if args.output_joint_format == 'euler':
+        mujoco_pose = np.array([euler_joints]).reshape(mujoco_pose.shape)
 
     #if args.verbose:
         #print(mujoco_pose)

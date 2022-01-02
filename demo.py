@@ -20,6 +20,7 @@ os.environ['PYOPENGL_PLATFORM'] = 'egl'
 import cv2
 import time
 import torch
+torch.cuda.empty_cache()
 import joblib
 import shutil
 import colorsys
@@ -371,13 +372,13 @@ if __name__ == '__main__':
     parser.add_argument('--yolo_img_size', type=int, default=416,
                         help='input image size for yolo detector')
 
-    parser.add_argument('--tracker_batch_size', type=int, default=12,
+    parser.add_argument('--tracker_batch_size', type=int, default=6,
                         help='batch size of object detector used for bbox tracking')
 
     parser.add_argument('--staf_dir', type=str, default='/home/mkocabas/developments/openposetrack',
                         help='path to directory STAF pose tracking method installed.')
 
-    parser.add_argument('--vibe_batch_size', type=int, default=450,
+    parser.add_argument('--vibe_batch_size', type=int, default=100,
                         help='batch size of VIBE')
 
     parser.add_argument('--display', action='store_true',
