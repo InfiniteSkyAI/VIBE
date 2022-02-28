@@ -1,3 +1,11 @@
+
+# Inf Sky Testing
+
+Run script `process_video INPUT_VIDEO OUTPUT_FOLDER`
+
+Note, the output will be saved in `OUTPUT_FOLDER/output`.
+
+
 # VIBE: Video Inference for Human Body Pose and Shape Estimation [CVPR-2020]
 [![report](https://img.shields.io/badge/arxiv-report-red)](https://arxiv.org/abs/1912.05656) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1dFfwxZ52MN86FA6uFNypMEdFShd2euQA) [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/vibe-video-inference-for-human-body-pose-and/3d-human-pose-estimation-on-3dpw)](https://paperswithcode.com/sota/3d-human-pose-estimation-on-3dpw?p=vibe-video-inference-for-human-body-pose-and)
 
