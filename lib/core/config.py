@@ -26,7 +26,10 @@ MPII3D_DIR = 'data/mpi_inf_3dhp'
 THREEDPW_DIR = 'data/3dpw'
 PENNACTION_DIR = 'data/penn_action'
 POSETRACK_DIR = 'data/posetrack'
-VIBE_DATA_DIR = 'data/vibe_data'
+
+import os.path as osp
+cur_dir = osp.dirname(__file__)
+VIBE_DATA_DIR = f'{cur_dir}/../../data/vibe_data'
 
 # Configuration variables
 cfg = CN()

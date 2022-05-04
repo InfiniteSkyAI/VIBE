@@ -205,6 +205,7 @@ def video_to_images(vid_file, img_folder=None, return_info=False):
 
 
 def download_url(url, outdir):
+    print("attempting download")
     print(f'Downloading files from {url}')
     cmd = ['wget', '-c', url, '-P', outdir]
     subprocess.call(cmd)
@@ -212,14 +213,15 @@ def download_url(url, outdir):
 
 def download_ckpt(outdir='data/vibe_data', use_3dpw=False):
     os.makedirs(outdir, exist_ok=True)
+    cur_dir = os.path.dirname(__file__)
 
     if use_3dpw:
-        ckpt_file = 'data/vibe_data/vibe_model_w_3dpw.pth.tar'
+        ckpt_file = f'{cur_dir}../../data/vibe_data/vibe_model_w_3dpw.pth.tar'
         url = 'https://www.dropbox.com/s/41ozgqorcp095ja/vibe_model_w_3dpw.pth.tar'
         if not os.path.isfile(ckpt_file):
             download_url(url=url, outdir=outdir)
     else:
-        ckpt_file = 'data/vibe_data/vibe_model_wo_3dpw.pth.tar'
+        ckpt_file = f'{cur_dir}/../../data/vibe_data/vibe_model_wo_3dpw.pth.tar'
         url = 'https://www.dropbox.com/s/amj2p8bmf6g56k6/vibe_model_wo_3dpw.pth.tar'
         if not os.path.isfile(ckpt_file):
             download_url(url=url, outdir=outdir)

@@ -80,13 +80,14 @@ for d in range(data.shape[0]):
         x_orig, y_orig, z_orig = rot_vec
         new_vec = [x_orig, -z_orig, y_orig]
 
-        #Convert angle axis to mujoco style quaternion idendity = (1, 0, 0, 0)
+        #Convert angle axis to mujoco style quaternion idendity = (0, 0, 0, 1)
         rotation = R.from_rotvec(new_vec)
         
+        # Combining rotation between middle spine (ind=5) and upper spine (ind=8)
         if v == 5:
             rot_vec = smpl_pose[8]
             if args.verbose:
-                print(f"adding to ind {k}:", rot_vec)
+                print(f"spine: adding to ind {k}:", rot_vec)
 
             #Rotate axes to match mujoco
             x_orig, y_orig, z_orig = rot_vec
@@ -95,7 +96,7 @@ for d in range(data.shape[0]):
             rotation = top_spine_rotation * rotation
 
         if args.output_joint_format == 'euler':
-            start_ind = k*3
+            # start_ind = k*3
             euler_data = rotation.as_euler('xyz')
             euler_joints.extend(euler_data.flatten())
         #if args.output_joint_format == 'quat':

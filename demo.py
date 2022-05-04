@@ -70,7 +70,9 @@ def main(args):
         exit(f'Input video \"{video_file}\" does not exist!')
 
     output_path = os.path.join(args.output_folder, os.path.basename(video_file).replace('.mp4', ''))
-    os.makedirs(output_path, exist_ok=True)
+    if args.save_output or args.save_obj or not args.no_render: 
+        print("Making dir") 
+        os.makedirs(output_path, exist_ok=True)
 
     image_folder, num_frames, img_shape = video_to_images(video_file, return_info=True)
 
@@ -125,6 +127,7 @@ def main(args):
     vibe_time = time.time()
     vibe_results = {}
     for person_id in tqdm(list(tracking_results.keys())):
+        print(f"Person {person_id}")
         bboxes = joints2d = None
 
         if args.tracking_method == 'bbox':
@@ -268,9 +271,9 @@ def main(args):
     print(f'Total time spent: {total_time:.2f} seconds (including model loading time).')
     print(f'Total FPS (including model loading time): {num_frames / total_time:.2f}.')
 
-    print(f'Saving output results to \"{os.path.join(output_path, "vibe_output.pkl")}\".')
-
-    joblib.dump(vibe_results, os.path.join(output_path, "vibe_output.pkl"))
+    if args.save_output:
+        print(f'Saving output results to \"{os.path.join(output_path, "vibe_output.pkl")}\".')
+        joblib.dump(vibe_results, os.path.join(output_path, "vibe_output.pkl"))
 
     if not args.no_render:
         # ========= Render results as a single video ========= #
@@ -352,6 +355,7 @@ def main(args):
 
     shutil.rmtree(image_folder)
     print('================= END =================')
+    return vibe_results
 
 
 if __name__ == '__main__':
@@ -359,6 +363,9 @@ if __name__ == '__main__':
 
     parser.add_argument('--vid_file', type=str,
                         help='input video path or youtube link')
+
+    parser.add_argument('--save_output', action='store_true',
+                            help='save the output of the vibe to args.output_folder')
 
     parser.add_argument('--output_folder', type=str, default='output/',
                         help='output folder to write results')
