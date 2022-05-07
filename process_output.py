@@ -18,7 +18,7 @@ python test/sim/smpl_matching_humanoid.py --input_traj ../VIBE/processed_output/
 """
 
 #Current mapping. Should be dynamically passed later on
-mapping_smpl2mujoco = {
+mapping_mujoco2smpl = {
     0: 0, #left hip 
     1: 3, #left knee
     2: 6, #left ankle
@@ -70,7 +70,7 @@ for d in range(data.shape[0]):
     if args.output_joint_format == 'euler':
         euler_joints = []
 
-    for k, v in mapping_smpl2mujoco.items():
+    for k, v in mapping_mujoco2smpl.items():
 
         rot_vec = smpl_pose[v]
         if args.verbose:
