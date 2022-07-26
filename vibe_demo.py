@@ -74,7 +74,7 @@ def main(args):
         print("Making dir") 
         os.makedirs(output_path, exist_ok=True)
 
-    image_folder, num_frames, img_shape = video_to_images(video_file, return_info=True)
+    image_folder, num_frames, img_shape = video_to_images(video_file,img_folder='IMG_8312/output',return_info=True)
 
     print(f'Input video number of frames {num_frames}')
     orig_height, orig_width = img_shape[:2]
